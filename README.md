@@ -1,4 +1,4 @@
-Bladder Cancer Microarray Analysis (GSE7476)
+**Bladder Cancer Microarray Analysis (GSE7476)**
 
 Comprehensive transcriptomic analysis of bladder cancer using Affymetrix microarray data
 
@@ -44,9 +44,9 @@ T2-4
 
 The original CEL files are available through the Gene Expression Omnibus (GEO). Raw data files are not included in this repository.
 
-Analytical Workflow
+**Analytical Workflow**
 
-1. Data Acquisition and Quality Control
+**1. Data Acquisition and Quality Control**
 
 Import of raw Affymetrix CEL files.
 
@@ -58,7 +58,7 @@ Principal Component Analysis (PCA).
 
 Sample-to-sample correlation analysis.
 
-2. Data Normalization
+**2. Data Normalization**
 
 Background correction using the IdealMM approach.
 
@@ -68,7 +68,7 @@ Expression summarization using average log intensity.
 
 Evaluation of normalized expression distributions.
 
-3. Probe Annotation
+**3. Probe Annotation**
 
 Annotation using the hgu133plus2.db Bioconductor package.
 
@@ -76,7 +76,7 @@ Mapping of probe identifiers to gene symbols, gene names, and Entrez Gene IDs.
 
 Assessment of annotation ambiguity and multiple probe-to-gene mappings.
 
-4. Differential Gene Expression Analysis
+**4. Differential Gene Expression Analysis**
 
 Differential expression analysis using the limma package.
 
@@ -94,7 +94,7 @@ Identification and visualization of significant probes and genes.
 
 Significance threshold: Adjusted p-value < 0.05.
 
-5. Overlap and Gene-Level Analysis
+**5. Overlap and Gene-Level Analysis**
 
 Identification of shared and comparison-specific significant probes.
 
@@ -104,7 +104,7 @@ Evaluation of expression direction among shared probes.
 
 Gene-level deduplication using the most statistically significant representative probe for each gene.
 
-6. Functional Enrichment Analysis
+**6. Functional Enrichment Analysis**
 
 Functional characterization of significant genes using:
 
@@ -116,7 +116,7 @@ Reactome Pathway Analysis.
 
 Both individual and comparative enrichment analyses were performed, including separate analyses of upregulated and downregulated genes.
 
-7. Gene Set Enrichment Analysis
+**7. Gene Set Enrichment Analysis**
 
 Hallmark gene set enrichment analysis.
 
@@ -126,11 +126,11 @@ Comparison of pathway enrichment patterns across experimental groups.
 
 Assessment of ranking-method sensitivity.
 
-8. Candidate Gene Prioritization
+**8. Candidate Gene Prioritization**
 
 Integration of differential expression and annotation results to identify candidate genes for further investigation.
 
-9. Sensitivity Analysis
+**9. Sensitivity Analysis**
 
 Evaluation of ambiguous probe annotations.
 
