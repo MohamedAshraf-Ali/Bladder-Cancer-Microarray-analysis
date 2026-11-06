@@ -1,4 +1,3 @@
-
 #Loading required packages
 library(affy)
 library(affyPLM)
@@ -91,7 +90,7 @@ ggplot(
   )
 
 ggsave(
-  filename = "Raw_Density_Plot.pdf",
+  filename = "Raw_Density_Plot.png",
   plot = raw_density_plot,
   width = 10,
   height = 7,
@@ -114,7 +113,7 @@ ggplot(raw_plot_data, aes(x = `Sample IDs`, y = Intensity, fill = `Sample IDs`))
   )
 
 ggsave(
-  filename = "Raw_Boxplot.pdf",
+  filename = "Raw_Boxplot.png",
   plot = raw_boxplot,
   width = 10,
   height = 7
@@ -125,7 +124,7 @@ pca_raw <- prcomp(t(exp.raw), scale. = F, center = T)
 autoplot(pca_raw, data = pheno_data, colour = "Sample.Type", frame = T)
 
 ggsave(
-  "Raw_PCA.pdf",
+  "Raw_PCA.png",
   plot = raw_pca_plot,
   width = 9,
   height = 7
@@ -186,7 +185,7 @@ ggplot(
   )
 
 ggsave(
-  filename = "Normalized_Density_Plot.pdf",
+  filename = "Normalized_Density_Plot.png",
   plot = norm_density_plot,
   width = 10,
   height = 7,
@@ -212,7 +211,7 @@ ggplot(
 )
 
 ggsave(
-  "Normalized_Boxplot.pdf",
+  "Normalized_Boxplot.png",
   plot = norm_boxplot,
   width = 10,
   height = 7
@@ -244,11 +243,13 @@ Heatmap(sample_cor, name = "Pearson\nCorrelation",
         column_title = "Sample-to-Sample Correlation", row_title = "Columns",
         row_names_gp = gpar(fontsize = 8), column_names_gp = gpar(fontsize = 8))
 
-pdf(
-  "Sample_Correlation_Heatmap.pdf",
-  width = 9,
-  height = 8
+png(
+  "Sample_Correlation_Heatmap.png",
+  width = 2700,
+  height = 2400,
+  res = 300
 )
+
 draw(correlation_heatmap)
 dev.off()
 
@@ -524,7 +525,7 @@ volcano_TaGL <- EnhancedVolcano(
   max.overlaps = 20
 )
 
-ggsave("Volcano_TaGL_vs_Control.pdf", volcano_TaGL, width = 9, height = 8)
+ggsave("Volcano_TaGL_vs_Control.png", volcano_TaGL, width = 9, height = 8)
 
 #Volcano plot for T1GH
 volcano_T1GH <- EnhancedVolcano(
@@ -541,7 +542,7 @@ volcano_T1GH <- EnhancedVolcano(
   max.overlaps = 20
 )
 
-ggsave("Volcano_T1GH_vs_Control.pdf", volcano_T1GH, width = 9, height = 8)
+ggsave("Volcano_T1GH_vs_Control.png", volcano_T1GH, width = 9, height = 8)
 
 #Volcano plot for T2_4
 volcano_T2_4 <- EnhancedVolcano(
@@ -558,7 +559,7 @@ volcano_T2_4 <- EnhancedVolcano(
   max.overlaps = 20
 )
 
-ggsave("Volcano_T2_4_vs_Control.pdf", volcano_T2_4, width = 9, height = 8)
+ggsave("Volcano_T2_4_vs_Control.png", volcano_T2_4, width = 9, height = 8)
 
 
 #Identify significant probes from each comparison 
@@ -603,7 +604,7 @@ venn_plot <- ggVennDiagram(deg_sets, label_alpha = 0.7) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   theme_void()
 
-ggsave("Significant_Probe_Overlap_Venn.pdf",
+ggsave("Significant_Probe_Overlap_Venn.png",
        plot = venn_plot, width = 8, height = 7)
 
 #Do shared DEGs change in the same direction across all three comparisons?
@@ -804,15 +805,20 @@ dotplot(
 )
 
 #Save 
-pdf("GO_BP_TaGL.pdf", width = 10, height = 8)
+# GO BP: TaGL
+png("GO_BP_TaGL.png", width = 3000, height = 2400, res = 300)
 print(dotplot(ego_TaGL, showCategory = 15))
 dev.off()
 
-pdf("GO_BP_T1GH.pdf", width = 10, height = 8)
+
+# GO BP: T1GH
+png("GO_BP_T1GH.png", width = 3000, height = 2400, res = 300)
 print(dotplot(ego_T1GH, showCategory = 15))
 dev.off()
 
-pdf("GO_BP_T2_4.pdf", width = 10, height = 8)
+
+# GO BP: T2-4
+png("GO_BP_T2_4.png", width = 3000, height = 2400, res = 300)
 print(dotplot(ego_T2_4, showCategory = 15))
 dev.off()
 
@@ -835,7 +841,7 @@ compare_go <- compareCluster(
   universe = gene_universe
 )
 
-dotplot(
+go_bp_comparison_plot <- dotplot(
   compare_go,
   showCategory = 15,
   title = "GO Biological Process Comparison",
@@ -843,16 +849,14 @@ dotplot(
 )
 
 #Save 
-pdf("GO_BP_Comparison.pdf", width = 12, height = 9)
-
-print(
-  dotplot(
-    compare_go,
-    showCategory = 15,
-    title = "GO Biological Process Comparison",
-    font.size = 9
-  )
+png(
+  "GO_BP_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
+
+print(go_bp_comparison_plot)
 
 dev.off()
 
@@ -913,15 +917,20 @@ dotplot(
 )
 
 #Save
-pdf("KEGG_TaGL.pdf", width = 10, height = 8)
+# KEGG: TaGL
+png("KEGG_TaGL.png", width = 3000, height = 2400, res = 300)
 print(dotplot(kegg_TaGL, showCategory = 15, font.size = 9))
 dev.off()
 
-pdf("KEGG_T1GH.pdf", width = 10, height = 8)
+
+# KEGG: T1GH
+png("KEGG_T1GH.png", width = 3000, height = 2400, res = 300)
 print(dotplot(kegg_T1GH, showCategory = 15, font.size = 9))
 dev.off()
 
-pdf("KEGG_T2_4.pdf", width = 10, height = 8)
+
+# KEGG: T2-4
+png("KEGG_T2_4.png", width = 3000, height = 2400, res = 300)
 print(dotplot(kegg_T2_4, showCategory = 15, font.size = 9))
 dev.off()
 
@@ -945,7 +954,12 @@ dotplot(
 )
 
 #Save 
-pdf("KEGG_Pathway_Comparison.pdf", width = 12, height = 9)
+png(
+  "KEGG_Pathway_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
+)
 
 print(
   dotplot(
@@ -1016,15 +1030,20 @@ dotplot(
 )
 
 #Save
-pdf("Reactome_TaGL.pdf", width = 10, height = 8)
+# Reactome: TaGL
+png("Reactome_TaGL.png", width = 3000, height = 2400, res = 300)
 print(dotplot(reactome_TaGL, showCategory = 15, font.size = 9))
 dev.off()
 
-pdf("Reactome_T1GH.pdf", width = 10, height = 8)
+
+# Reactome: T1GH
+png("Reactome_T1GH.png", width = 3000, height = 2400, res = 300)
 print(dotplot(reactome_T1GH, showCategory = 15, font.size = 9))
 dev.off()
 
-pdf("Reactome_T2_4.pdf", width = 10, height = 8)
+
+# Reactome: T2-4
+png("Reactome_T2_4.png", width = 3000, height = 2400, res = 300)
 print(dotplot(reactome_T2_4, showCategory = 15, font.size = 9))
 dev.off()
 
@@ -1048,7 +1067,12 @@ dotplot(
 )
 
 #Save 
-pdf("Reactome_Pathway_Comparison.pdf", width = 12, height = 9)
+png(
+  "Reactome_Pathway_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
+)
 
 print(
   dotplot(
@@ -1220,19 +1244,28 @@ down_go_plot <- enrichplot::dotplot(
 down_go_plot
 
 #Save
-ggplot2::ggsave(
-  "GO_Upregulated_Comparison.pdf",
-  up_go_plot,
-  width = 12,
-  height = 9
+# GO upregulated comparison
+png(
+  "GO_Upregulated_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
 
-ggplot2::ggsave(
-  "GO_Downregulated_Comparison.pdf",
-  down_go_plot,
-  width = 12,
-  height = 9
+print(up_go_plot)
+dev.off()
+
+
+# GO downregulated comparison
+png(
+  "GO_Downregulated_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
+
+print(down_go_plot)
+dev.off()
 
 ###################### Direction-specific KEGG enrichment #######################
 #Upregulated genes
@@ -1287,19 +1320,28 @@ kegg_down_plot <- enrichplot::dotplot(
 kegg_down_plot
 
 #Save
-ggplot2::ggsave(
-  "KEGG_Upregulated_Comparison.pdf",
-  kegg_up_plot,
-  width = 12,
-  height = 9
+# KEGG upregulated comparison
+png(
+  "KEGG_Upregulated_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
 
-ggplot2::ggsave(
-  "KEGG_Downregulated_Comparison.pdf",
-  kegg_down_plot,
-  width = 12,
-  height = 9
+print(kegg_up_plot)
+dev.off()
+
+
+# KEGG downregulated comparison
+png(
+  "KEGG_Downregulated_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
+
+print(kegg_down_plot)
+dev.off()
 
 ###################### Direction-specific Reactome enrichment #######################
 #Upregulated genes
@@ -1354,19 +1396,28 @@ reactome_down_plot <- enrichplot::dotplot(
 reactome_down_plot
 
 #Save
-ggplot2::ggsave(
-  "Reactome_Upregulated_Comparison.pdf",
-  reactome_up_plot,
-  width = 12,
-  height = 9
+# Reactome upregulated comparison
+png(
+  "Reactome_Upregulated_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
 
-ggplot2::ggsave(
-  "Reactome_Downregulated_Comparison.pdf",
-  reactome_down_plot,
-  width = 12,
-  height = 9
+print(reactome_up_plot)
+dev.off()
+
+
+# Reactome downregulated comparison
+png(
+  "Reactome_Downregulated_Comparison.png",
+  width = 3600,
+  height = 2700,
+  res = 300
 )
+
+print(reactome_down_plot)
+dev.off()
 
 ###################### Prepare the heatmap expression matrix ########################
 #Top 50 significant genes from each comparison, selected by adjusted p-value
@@ -1469,6 +1520,18 @@ heatmap_plot <- ComplexHeatmap::Heatmap(
 )
 
 heatmap_plot
+
+# Save heatmap as high-resolution PNG (300 dpi)
+png(
+  "Top_93_DEG_Heatmap.png",
+  width = 3000,
+  height = 3600,
+  res = 300
+)
+
+ComplexHeatmap::draw(heatmap_plot)
+
+dev.off()
 
 ################## Identify common significant genes #####################
 #Extract shared gene symbols
@@ -1844,26 +1907,22 @@ gsea_plot_T2_4 <- enrichplot::dotplot(
 gsea_plot_T2_4
 
 #Save
-ggplot2::ggsave(
-  "GSEA_TaGL.pdf",
-  gsea_plot_TaGL,
-  width = 11,
-  height = 9
-)
+# GSEA: TaGL
+png("GSEA_TaGL.png", width = 3300, height = 2700, res = 300)
+print(gsea_plot_TaGL)
+dev.off()
 
-ggplot2::ggsave(
-  "GSEA_T1GH.pdf",
-  gsea_plot_T1GH,
-  width = 11,
-  height = 9
-)
 
-ggplot2::ggsave(
-  "GSEA_T2_4.pdf",
-  gsea_plot_T2_4,
-  width = 11,
-  height = 9
-)
+# GSEA: T1GH
+png("GSEA_T1GH.png", width = 3300, height = 2700, res = 300)
+print(gsea_plot_T1GH)
+dev.off()
+
+
+# GSEA: T2-4
+png("GSEA_T2_4.png", width = 3300, height = 2700, res = 300)
+print(gsea_plot_T2_4)
+dev.off()
 
 #Export GSEA results
 write.csv(
